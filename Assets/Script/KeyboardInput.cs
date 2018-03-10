@@ -9,17 +9,21 @@ public class KeyboardInput : MonoBehaviour {
 	StringBuilder stringBuilder;
 	[HideInInspector]public string answer;
 	bool getInputState = true;
-	Button button;
+	// Button button;
 	Sequence sequence;
 
 	// Use this for initialization
 	void Start () {
 		sequence = DOTween.Sequence();
 		stringBuilder = new StringBuilder();
-		button = GameObject.Find("a").GetComponent<Button>();
+		// button = GameObject.Find("a").GetComponent<Button>();
 	}
 	
-	// Update is called once per frame
+	public string GetStringBuilder()
+	{
+		return stringBuilder.ToString();
+	}
+
 	void Update () {
 		
 		if (getInputState)

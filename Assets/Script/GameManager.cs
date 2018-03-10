@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour {
 	Questions questions;
 
 	GameObject player;
+	Text missileNumber;
+
 	public GameObject missile;
 	KDNetwork kdNetwork;
 
@@ -30,6 +33,9 @@ public class GameManager : MonoBehaviour {
 		kdNetwork = new KDNetwork(GameObject.Find("SocketIO").GetComponent<SocketIOComponent>());
 		kdNetwork.OnOpen += OnOpen;
 		kdNetwork.BeAttacked += BeAttacked;
+
+		missileNumber = GameObject.Find("MissileNumber").GetComponent<Text>();
+		missileNumber.text = "Missiles: 0";
 	}
 	
 	// Update is called once per frame
@@ -43,10 +49,11 @@ public class GameManager : MonoBehaviour {
 		isCorrect = FindObjectOfType<Questions>().CheckAnswers(answer);
 		if (isCorrect)
 		{
-			score += 100;
+			// score += 100;
 			if (player.GetComponent<PlayerController>().missileCapacity <= 5)
 			{
-				player.GetComponent<PlayerController>().missileCapacity += 1;				
+				player.GetComponent<PlayerController>().missileCapacity += 1;
+				missileNumber.text = "Missiles: " + player.GetComponent<PlayerController>().missileCapacity;				
 			}
 			Debug.Log("correct!");
 		}
@@ -73,6 +80,7 @@ public class GameManager : MonoBehaviour {
 		enemyMissile.GetComponent<Missile>().SetDirection(Vector2.down);
 		enemyMissile.GetComponent<Missile>().SetSpeed(2f);
 		enemyMissile.GetComponentInChildren<TextMesh>().text = byUser;
+		enemyMissile.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().sortingOrder = 2;
 
 	}
 }
