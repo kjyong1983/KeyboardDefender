@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8721476dcad15844b9ccce49c517601e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missile: {fileID: 1245057496688960, guid: cc357aeaf3580d04995c694e11e0240e, type: 2}
+  missileCapacity: 0
 --- !u!212 &212443083646658546
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 	
-	int life = 100;
+	public int life = 100;
 	int mana = 100;
 	int score = 0;
 	bool isCorrect = false;
 	KeyboardInput keyboardInput;
 	Questions questions;
+
+	GameObject player;
 	// Use this for initialization
 	void Start () {
 		keyboardInput = FindObjectOfType<KeyboardInput>();
 		questions = FindObjectOfType<Questions>();
+		player = GameObject.FindWithTag("Player");
 	}
 	
 	// Update is called once per frame
@@ -28,6 +31,10 @@ public class GameManager : MonoBehaviour {
 		if (isCorrect)
 		{
 			score += 100;
+			if (player.GetComponent<PlayerController>().missileCapacity <= 5)
+			{
+				player.GetComponent<PlayerController>().missileCapacity += 1;				
+			}
 			Debug.Log("correct!");
 		}
 		else

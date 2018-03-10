@@ -7,8 +7,14 @@ public class PlayerController : MonoBehaviour {
 	float speed = 5f;
 	Rigidbody2D rigidbody2d;
 
+	const float SHOOTTIMERMAX = 0.3f;
+	float shootTimer = 0;
+	public GameObject missile;
+
 	float deltaX = 0;
 	float deltaY = 0;
+
+	public int missileCapacity = 0;
 	// Use this for initialization
 	void Start () {
 		rigidbody2d = GetComponent<Rigidbody2D>();
@@ -35,6 +41,19 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		rigidbody2d.velocity = new Vector2(deltaX, deltaY);
+
+		shootTimer += Time.deltaTime;
+		
+		if (Input.GetKeyDown(KeyCode.Space) && shootTimer > SHOOTTIMERMAX && missileCapacity > 0)
+		{
+			shootTimer = 0;
+			missileCapacity -= 1;
+			Debug.Log("Boom");
+			var bullet = Instantiate(missile, transform.position, Quaternion.identity);
+			bullet.GetComponent<Missile>().SetDirection(Vector2.up);
+		
+		}
+
 
 	}
 }
