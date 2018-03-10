@@ -7,9 +7,9 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-    socket.on('beep', function(data){
-        io.emit('boop', data);
-        console.log('beep');
+    socket.on('send', function(data){
+        socket.broadcast.emit('receive', data);
+        console.log(data);
     });
 });
 

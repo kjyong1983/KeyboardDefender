@@ -32,73 +32,30 @@ using SocketIO;
 
 public class TestSocketIO : MonoBehaviour
 {
-	private SocketIOComponent socket;
+	private KDNetwork kdNetwork;
 
 	public void Start() 
 	{
 		GameObject go = GameObject.Find("SocketIO");
-		socket = go.GetComponent<SocketIOComponent>();
+		SocketIOComponent socket = go.GetComponent<SocketIOComponent>();
 
-		socket.On("open", TestOpen);
-		socket.On("boop", TestBoop);
-		socket.On("error", TestError);
-		socket.On("close", TestClose);
-		
-		StartCoroutine("BeepBoop");
+		kdNetwork = new KDNetwork(socket);
+		kdNetwork.BeAttacked += BeAttacked;
+
+		StartCoroutine("Test");
 	}
 
-	private IEnumerator BeepBoop()
+	private IEnumerator Test()
 	{
-		JSONObject data = new JSONObject();
-		data.AddField("this", "here is argument");
-
-		// wait 1 seconds and continue
 		yield return new WaitForSeconds(1);
-		
-		socket.Emit("beep", data);
-		
-		// wait 3 seconds and continue
-		yield return new WaitForSeconds(3);
-		
-		socket.Emit("beep", data);
-		
-		// wait 2 seconds and continue
-		yield return new WaitForSeconds(2);
-		
-		socket.Emit("beep", data);
-		
-		// wait ONE FRAME and continue
-		yield return null;
-		
-		socket.Emit("beep", data);
-		socket.Emit("beep", data);
+
+		float coordX = 100.0f;
+		Debug.Log("Attak: " + coordX);
+		kdNetwork.Attack(coordX);
 	}
 
-	public void TestOpen(SocketIOEvent e)
+	private void BeAttacked(float coordX)
 	{
-		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
-	}
-	
-	public void TestBoop(SocketIOEvent e)
-	{
-		Debug.Log("[SocketIO] Boop received: " + e.name + " " + e.data);
-
-		if (e.data == null) { return; }
-
-		Debug.Log(
-			"#####################################################" +
-			"THIS: " + e.data.GetField("this").str +
-			"#####################################################"
-		);
-	}
-	
-	public void TestError(SocketIOEvent e)
-	{
-		Debug.Log("[SocketIO] Error received: " + e.name + " " + e.data);
-	}
-	
-	public void TestClose(SocketIOEvent e)
-	{	
-		Debug.Log("[SocketIO] Close received: " + e.name + " " + e.data);
+		Debug.Log("Be attacked: " + coordX);
 	}
 }
