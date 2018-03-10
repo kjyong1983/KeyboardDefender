@@ -12,7 +12,7 @@ public class KDNetwork {
 	public delegate void BeAttackedHandler(float coordX);
 	public event BeAttackedHandler BeAttacked;
 
-	private enum Names
+	private enum Actions
 	{
 		Attack
 	}
@@ -34,14 +34,14 @@ public class KDNetwork {
 		JSONObject data = new JSONObject();
 		data.AddField("coordX", coordX);
 
-		kdSocket.Send(Names.Attack.ToString(), data);
+		kdSocket.Send(Actions.Attack.ToString(), data);
 	}
 
 	private void OnReceive(string name, string userId, JSONObject data)
 	{
-		switch ((Names) Enum.Parse(typeof(Names), name))
+		switch ((Actions) Enum.Parse(typeof(Actions), name))
 		{
-			case Names.Attack:
+			case Actions.Attack:
 				OnSomeoneAttacked(name, userId, data);
 				break;
 		}
