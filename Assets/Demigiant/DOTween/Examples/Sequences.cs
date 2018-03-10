@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class Sequences : MonoBehaviour
 {
-	public Transform target, target02;
+	public Transform target;
 
 	void Start()
 	{
@@ -31,23 +31,5 @@ public class Sequences : MonoBehaviour
 
 		// Oh, and let's also make the whole Sequence loop backward and forward 4 times
 		mySequence.SetLoops(4, LoopType.Yoyo);
-
-	}
-
-	void Update()
-	{
-		Sequence mySequence2;
-
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			// Debug.Log("boing");
-			mySequence2 = DOTween.Sequence();
-			//mySequence2.Append(target02.DOScaleY(2,.5f));
-			// mySequence2.Append(target02.DOShakeScale(.2f,1,30,90,true));
-			mySequence2.Append(target02.DOPunchScale(Vector3.up*2, 1, 10, 0));
-			mySequence2.Append(target02.DOScaleY(1,.1f));
-			// mySequence2.SetLoops(-1, LoopType.Restart);
-		
-		}
 	}
 }

@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class Basics : MonoBehaviour
 {
-	public Transform cubeA, cubeB, cubeC;
+	public Transform cubeA, cubeB;
 
 	void Start()
 	{
@@ -23,11 +23,6 @@ public class Basics : MonoBehaviour
 
 		// cubeB > GENERIC WAY
 		DOTween.To(()=> cubeB.position, x=> cubeB.position = x, new Vector3(-2, 2, 0), 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
-
-		DOTween.To(()=> cubeC.position, x=> cubeC.position = x, new Vector3(0,2,0), .5f).SetLoops(-1, LoopType.Restart);
-		
-		// cubeC.DOMove(new Vector3(0,3,0), 1).SetLoops(-1, LoopType.Yoyo);
-		// cubeC.DOJump(new Vector3(0,3,0), 1, 1, 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
 
 		// Voilà.
 		// To see all available shortcuts check out DOTween's online documentation.
