@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 
 	GameObject player;
 	Text missileNumber;
+	Text HP;
 
 	public GameObject missile;
 	KDNetwork kdNetwork;
@@ -36,11 +37,13 @@ public class GameManager : MonoBehaviour {
 
 		missileNumber = GameObject.Find("MissileNumber").GetComponent<Text>();
 		missileNumber.text = "Missiles: 0";
+		HP = GameObject.Find("HP").GetComponent<Text>();
+		HP.text = "HP: 100";
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		HP.text = "HP: " + life.ToString();
 	}
 
 	public void CompareAnswer(string answer)
