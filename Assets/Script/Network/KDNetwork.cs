@@ -19,6 +19,7 @@ public class KDNetwork {
 	{
 		Login,
 		Attack,
+		Score,
 
 		ShareUserInfo
 	}
@@ -48,6 +49,14 @@ public class KDNetwork {
 		kdSocket.Send(Actions.Attack.ToString(), data);
 	}
 
+	public void Score(int score)
+	{
+		JSONObject data = new JSONObject();
+		data.AddField("score", score);
+
+		kdSocket.Send(Actions.Attack.ToString(), data);
+	}
+
 	private void ShareUserInfo(string username)
 	{
 		JSONObject data = new JSONObject();
@@ -66,7 +75,9 @@ public class KDNetwork {
 			case Actions.Attack:
 				OnSomeoneAttacked(userId, data);
 				break;
-
+			case Actions.Score:
+				OnSomeoneSendScore(userId, data);
+				break;
 			case Actions.ShareUserInfo:
 				OnSomeoneSharedUserInfo(userId, data);
 				break;
@@ -104,6 +115,11 @@ public class KDNetwork {
 		float coordX = data.GetField("coordX").f;
 		string byUser = usernameMap[userId];
 		BeAttacked(coordX, byUser);
+	}
+
+	private void OnSomeoneSendScore(string userId, JSONObject data)
+	{
+		
 	}
 
 	private void OnSomeoneSharedUserInfo(string userId, JSONObject data)
