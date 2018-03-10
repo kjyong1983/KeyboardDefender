@@ -10,11 +10,12 @@ public class Title : MonoBehaviour {
 
 	void Start()
 	{
-		userName = GameObject.Find("InputField").GetComponent<InputField>().text;
+		
 	}
 
 	public void StartGame()
 	{
+		userName = GameObject.Find("InputField").GetComponent<InputField>().text;
 		SetName(userName);
 		LoadGame(1);
 	}

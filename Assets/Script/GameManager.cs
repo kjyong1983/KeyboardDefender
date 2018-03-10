@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
 	int mana = 100;
 	int score = 0;
 	bool isCorrect = false;
+
+	private string myName;
+
 	KeyboardInput keyboardInput;
 	Questions questions;
 
@@ -18,6 +21,8 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		myName = PlayerPrefs.GetString("NAME");
+
 		keyboardInput = FindObjectOfType<KeyboardInput>();
 		questions = FindObjectOfType<Questions>();
 		player = GameObject.FindWithTag("Player");
@@ -58,7 +63,7 @@ public class GameManager : MonoBehaviour {
 
 	private void OnOpen()
 	{
-		kdNetwork.Login(PlayerPrefs.GetString("NAME"));
+		kdNetwork.Login(myName);
 	}
 
 	private void BeAttacked(float coordX, string byUser)
