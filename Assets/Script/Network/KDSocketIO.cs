@@ -8,6 +8,8 @@ public class KDSocketIO {
 	private Action onOpen;
 	private Action<string, string, JSONObject> onReceive;
 
+	private bool opened = false;
+
 	public string UserId { get; set; }
 
 	public KDSocketIO(SocketIOComponent socket, Action onOpen, Action<string, string, JSONObject> onReceive)
@@ -36,6 +38,12 @@ public class KDSocketIO {
 	public void OnOpen(SocketIOEvent e)
 	{
 		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
+
+		if (opened)
+		{
+			return;
+		}
+		opened = true;
 
 		onOpen();
 	}
