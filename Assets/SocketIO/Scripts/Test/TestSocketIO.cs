@@ -57,7 +57,7 @@ public class TestSocketIO : MonoBehaviour
 
 	private void OnOpen()
 	{
-		
+		kdNetwork.Login("My Name");
 	}
 
 	private void BeAttacked(float coordX)

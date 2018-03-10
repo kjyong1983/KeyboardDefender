@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SocketIO;
 using UnityEngine;
 
@@ -12,9 +13,14 @@ public class KDNetwork {
 	public delegate void BeAttackedHandler(float coordX);
 	public event BeAttackedHandler BeAttacked;
 
+	private Dictionary<string, string> usernameMap = new Dictionary<string, string>();
+
 	private enum Actions
 	{
-		Attack
+		Login,
+		Attack,
+
+		ShareUserInfo
 	}
 
 	private KDSocketIO kdSocket;
@@ -26,7 +32,12 @@ public class KDNetwork {
 
 	public void Login(string username)
 	{
-		// TODO
+		usernameMap.Add(kdSocket.UserId, username);
+
+		JSONObject data = new JSONObject();
+		data.AddField("username", username);
+
+		kdSocket.Send(Actions.Login.ToString(), data);
 	}
 
 	public void Attack(float coordX)
@@ -37,14 +48,43 @@ public class KDNetwork {
 		kdSocket.Send(Actions.Attack.ToString(), data);
 	}
 
+	private void ShareUserInfo(string username)
+	{
+		JSONObject data = new JSONObject();
+		data.AddField("username", username);
+
+		kdSocket.Send(Actions.ShareUserInfo.ToString(), data);
+	}
+
 	private void OnReceive(string name, string userId, JSONObject data)
 	{
 		switch ((Actions) Enum.Parse(typeof(Actions), name))
 		{
+			case Actions.Login:
+				OnSomeoneLogined(userId, data);
+				break;
 			case Actions.Attack:
 				OnSomeoneAttacked(userId, data);
 				break;
+
+			case Actions.ShareUserInfo:
+				OnSomeoneSharedUserInfo(userId, data);
+				break;
 		}
+	}
+
+	private void OnSomeoneLogined(string userId, JSONObject data)
+	{
+		if (!__DEV__)
+		{
+			if (userId == kdSocket.UserId)
+			{
+				return;
+			}
+		}
+
+		string myName = usernameMap[kdSocket.UserId];
+		ShareUserInfo(myName);
 	}
 
 	// NOTE: Someone attacked (It doesn't necessa necessarily mean that this user is attacked. It depends on the game rule.)
@@ -60,5 +100,11 @@ public class KDNetwork {
 
 		float coordX = data.GetField("coordX").f;
 		BeAttacked(coordX);
+	}
+
+	private void OnSomeoneSharedUserInfo(string userId, JSONObject data)
+	{
+		string username = data.GetField("username").str;
+		usernameMap.Add(userId, username);
 	}
 }
