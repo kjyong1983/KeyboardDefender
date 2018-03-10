@@ -50,7 +50,7 @@ public class TestSocketIO : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1);
 
-		float coordX = 100.0f;
+		float coordX = 999.0f;
 		Debug.Log("Attak: " + coordX);
 		kdNetwork.Attack(coordX);
 	}
