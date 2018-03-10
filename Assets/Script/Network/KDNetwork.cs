@@ -42,13 +42,13 @@ public class KDNetwork {
 		switch ((Actions) Enum.Parse(typeof(Actions), name))
 		{
 			case Actions.Attack:
-				OnSomeoneAttacked(name, userId, data);
+				OnSomeoneAttacked(userId, data);
 				break;
 		}
 	}
 
 	// NOTE: Someone attacked (It doesn't necessa necessarily mean that this user is attacked. It depends on the game rule.)
-	private void OnSomeoneAttacked(string name, string userId, JSONObject data)
+	private void OnSomeoneAttacked(string userId, JSONObject data)
 	{
 		if (!__DEV__)
 		{
