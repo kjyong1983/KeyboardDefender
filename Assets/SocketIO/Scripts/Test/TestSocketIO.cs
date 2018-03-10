@@ -40,6 +40,7 @@ public class TestSocketIO : MonoBehaviour
 		SocketIOComponent socket = go.GetComponent<SocketIOComponent>();
 
 		kdNetwork = new KDNetwork(socket);
+		kdNetwork.OnOpen += OnOpen;
 		kdNetwork.BeAttacked += BeAttacked;
 
 		StartCoroutine("Test");
@@ -52,6 +53,11 @@ public class TestSocketIO : MonoBehaviour
 		float coordX = 100.0f;
 		Debug.Log("Attak: " + coordX);
 		kdNetwork.Attack(coordX);
+	}
+
+	private void OnOpen()
+	{
+		
 	}
 
 	private void BeAttacked(float coordX)

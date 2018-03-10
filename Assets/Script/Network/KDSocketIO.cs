@@ -5,12 +5,18 @@ using UnityEngine;
 public class KDSocketIO {
 
 	private SocketIOComponent socket;
-	private Action<string, JSONObject> onReceive;
+	private Action onOpen;
+	private Action<string, string, JSONObject> onReceive;
 
-	public KDSocketIO(SocketIOComponent socket, Action<string, JSONObject> onReceive)
+	public string UserId { get; set; }
+
+	public KDSocketIO(SocketIOComponent socket, Action onOpen, Action<string, string, JSONObject> onReceive)
 	{
 		this.socket = socket;
+		this.onOpen = onOpen;
 		this.onReceive = onReceive;
+
+		this.UserId = Guid.NewGuid().ToString();
 
 		socket.On("open", OnOpen);
 		socket.On("receive", OnReceive);
@@ -22,6 +28,7 @@ public class KDSocketIO {
 	{
 		JSONObject wholeData = new JSONObject();
 		wholeData.AddField("name", name);
+		wholeData.AddField("userId", UserId);
 		wholeData.AddField("data", data);
 		socket.Emit("send", wholeData);
 	}
@@ -29,6 +36,8 @@ public class KDSocketIO {
 	public void OnOpen(SocketIOEvent e)
 	{
 		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
+
+		onOpen();
 	}
 
 	public void OnReceive(SocketIOEvent e)
@@ -37,7 +46,7 @@ public class KDSocketIO {
 
 		if (e.data == null) { return; }
 
-		onReceive(e.data.GetField("name").str, e.data.GetField("data"));
+		onReceive(e.data.GetField("name").str, e.data.GetField("userId").str, e.data.GetField("data"));
 	}
 
 	public void OnError(SocketIOEvent e)
