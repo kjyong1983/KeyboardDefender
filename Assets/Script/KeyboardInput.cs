@@ -26,25 +26,24 @@ public class KeyboardInput : MonoBehaviour {
 		{
 			if (Input.anyKeyDown)
 			{
-				Debug.Log("input: " + Input.inputString);
+				// Debug.Log("input: " + Input.inputString);
 				
 				if (!Input.inputString.Equals(""))
 				{
 					var input = Input.inputString.ToLower();
-					if (Input.inputString.Length > 1)
+					GameObject button;
+					
+					if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Backspace))
+					{
+						// Debug.Log("enter");	
+					}
+					else if (input.Length >= 1)
 					{
 						input = input.Substring(Input.inputString.Length-1, 1);
-					}
-					var button = GameObject.Find(input).GetComponentInChildren<BoxCollider>().gameObject;					
-					//scale won't return to its original value!
-					// sequence.Append(
+						button = GameObject.Find(input).GetComponentInChildren<BoxCollider>().gameObject;											
 						button.transform.DOPunchScale(Vector3.forward * 20, 1f, 15, 1).SetEase(Ease.OutQuint);
-						// button.transform.DOShakeScale(1).SetEase(Ease.OutQuint)
-					// 	);
-					// sequence.Append(
-					// 	button.transform.DOScaleZ(20,0.1f).SetEase(Ease.InExpo)
-					// 	);
-					// button.transform.DOScaleZ(20, .1f);
+					}
+					
 				}
 
 				if (Input.GetKeyDown(KeyCode.Return))
@@ -57,10 +56,18 @@ public class KeyboardInput : MonoBehaviour {
 					gameManager.CompareAnswer(answer);
 
 					answer = "";
+
+					//Shoot missiles!
+					/*
+
+					 */
+				}
+				else if (Input.GetKeyDown(KeyCode.Backspace))
+				{
+					stringBuilder.Remove(stringBuilder.Length - 1, 1);
 				}
 				else
 				{
-					Debug.Log(Input.inputString);
 					stringBuilder.Append(Input.inputString);		
 				}
 			}

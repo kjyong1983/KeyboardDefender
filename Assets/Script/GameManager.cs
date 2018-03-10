@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour {
 
 	public void CompareAnswer(string answer)
 	{
-		isCorrect = questions.IsSame(answer);
+		// isCorrect = questions.IsSame(answer);
+		isCorrect = FindObjectOfType<Questions>().CheckAnswers(answer);
 		if (isCorrect)
 		{
 			score += 100;
