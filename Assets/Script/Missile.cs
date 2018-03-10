@@ -40,7 +40,7 @@ public class Missile : MonoBehaviour {
 	}
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.name.Equals("Hitzone"))
+		if (other.gameObject.name.Equals("HitZone"))
 		{
 			Debug.Log("base attacked");
 			GameObject.FindObjectOfType<GameManager>().life -= 10;
