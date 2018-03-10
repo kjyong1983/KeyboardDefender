@@ -44,3 +44,6 @@ TagManager:
   - name: game
     uniqueID: 396784021
     locked: 0
+  - name: userName
+    uniqueID: 3743161783
+    locked: 0

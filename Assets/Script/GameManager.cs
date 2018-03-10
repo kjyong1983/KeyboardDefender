@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour {
 		var enemyMissile = Instantiate(missile, new Vector3(coordX, 6, 200), Quaternion.identity) as GameObject;
 		enemyMissile.GetComponent<Missile>().SetDirection(Vector2.down);
 		enemyMissile.GetComponent<Missile>().SetSpeed(2f);
+		enemyMissile.GetComponentInChildren<TextMesh>().text = byUser;
 
 	}
 }
