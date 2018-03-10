@@ -83,6 +83,9 @@ public class KDNetwork {
 			}
 		}
 
+		string username = data.GetField("username").str;
+		usernameMap.Add(userId, username);
+
 		string myName = usernameMap[kdSocket.UserId];
 		ShareUserInfo(myName);
 	}
