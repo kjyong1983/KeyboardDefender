@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log("Boom");
 			var bullet = Instantiate(missile, transform.position, Quaternion.identity);
 			bullet.GetComponent<Missile>().SetDirection(Vector2.up);
-		
+			GameObject.FindObjectOfType<GameManager>().Attack(bullet.transform.position.x);
 		}
 
 

@@ -57,14 +57,14 @@ public class KeyboardInput : MonoBehaviour {
 
 					answer = "";
 
-					//Shoot missiles!
-					/*
-
-					 */
 				}
 				else if (Input.GetKeyDown(KeyCode.Backspace))
 				{
 					stringBuilder.Remove(stringBuilder.Length - 1, 1);
+				}
+				else if (Input.GetKeyDown(KeyCode.Space))
+				{
+					
 				}
 				else
 				{

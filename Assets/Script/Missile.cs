@@ -34,13 +34,25 @@ public class Missile : MonoBehaviour {
 		parent = gameObject;
 	}
 
+	public void SetSpeed(float value)
+	{
+		speed = value;	
+	}
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.name.Equals("Hitzone"))
 		{
+			Debug.Log("base attacked");
 			GameObject.FindObjectOfType<GameManager>().life -= 10;
+			Destroy(gameObject);
 		}
-		
+
+		if (other.gameObject.name.Equals("enemyMissile(Clone)"))
+		{
+			Destroy(other.gameObject);
+			Destroy(gameObject);
+		}
+
 		if (other.gameObject.CompareTag("Player") && !other.gameObject.Equals(parent))
 		{
 			Debug.Log("hit!");

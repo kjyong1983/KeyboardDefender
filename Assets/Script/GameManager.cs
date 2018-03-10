@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	Questions questions;
 
 	GameObject player;
-
+	public GameObject missile;
 	KDNetwork kdNetwork;
 
 	// Use this for initialization
@@ -58,11 +58,15 @@ public class GameManager : MonoBehaviour {
 
 	private void OnOpen()
 	{
-
+		kdNetwork.Login(PlayerPrefs.GetString("NAME"));
 	}
 
 	private void BeAttacked(float coordX, string byUser)
 	{
-		// TODO missile down
+		Debug.Log("beattacked " + coordX);
+		var enemyMissile = Instantiate(missile, new Vector3(coordX, 6, 200), Quaternion.identity) as GameObject;
+		enemyMissile.GetComponent<Missile>().SetDirection(Vector2.down);
+		enemyMissile.GetComponent<Missile>().SetSpeed(2f);
+
 	}
 }
