@@ -10,7 +10,7 @@ public class KDNetwork {
 	public delegate void OnOpenHandler();
 	public event OnOpenHandler OnOpen;
 
-	public delegate void BeAttackedHandler(float coordX);
+	public delegate void BeAttackedHandler(float coordX, string byUser);
 	public event BeAttackedHandler BeAttacked;
 
 	private Dictionary<string, string> usernameMap = new Dictionary<string, string>();
@@ -99,7 +99,8 @@ public class KDNetwork {
 		}
 
 		float coordX = data.GetField("coordX").f;
-		BeAttacked(coordX);
+		string byUser = usernameMap[userId];
+		BeAttacked(coordX, byUser);
 	}
 
 	private void OnSomeoneSharedUserInfo(string userId, JSONObject data)

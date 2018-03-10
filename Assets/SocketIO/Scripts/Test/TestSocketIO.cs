@@ -60,7 +60,7 @@ public class TestSocketIO : MonoBehaviour
 		kdNetwork.Login("My Name");
 	}
 
-	private void BeAttacked(float coordX)
+	private void BeAttacked(float coordX, string byUser)
 	{
 		Debug.Log("Be attacked: " + coordX);
 	}

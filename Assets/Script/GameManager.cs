@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	private void BeAttacked(float coordX)
+	private void BeAttacked(float coordX, string byUser)
 	{
 		// TODO missile down
 	}
