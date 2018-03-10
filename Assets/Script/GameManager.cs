@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SocketIO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +13,18 @@ public class GameManager : MonoBehaviour {
 	Questions questions;
 
 	GameObject player;
+
+	KDNetwork kdNetwork;
+
 	// Use this for initialization
 	void Start () {
 		keyboardInput = FindObjectOfType<KeyboardInput>();
 		questions = FindObjectOfType<Questions>();
 		player = GameObject.FindWithTag("Player");
+
+		kdNetwork = new KDNetwork(GameObject.Find("SocketIO").GetComponent<SocketIOComponent>());
+		kdNetwork.OnOpen += OnOpen;
+		kdNetwork.BeAttacked += BeAttacked;
 	}
 	
 	// Update is called once per frame
@@ -41,5 +49,20 @@ public class GameManager : MonoBehaviour {
 		{
 			Debug.Log("nah");
 		}
+	}
+
+	public void Attack(float coordX)
+	{
+		kdNetwork.Attack(coordX);
+	}
+
+	private void OnOpen()
+	{
+
+	}
+
+	private void BeAttacked(float coordX)
+	{
+		// TODO missile down
 	}
 }
